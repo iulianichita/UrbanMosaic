@@ -35,6 +35,43 @@ const cameraDefaultLookAt = new THREE.Vector3(0, 5.5, 0);
 const cameraDefaultFov = 75;
 let cameraTargetFov = cameraDefaultFov;
 
+// websocket pentru audio 
+let audioSocket = null;
+let muzicaCameraPornita = false;
+
+function initAudioSocket() {
+    audioSocket = new WebSocket('ws://localhost:8080');
+
+    audioSocket.addEventListener('open', () => {
+        console.log('Conectat la serverul audio');
+        audioSocket.send('START_BACKGROUND');
+    });
+
+    audioSocket.addEventListener('error', error => {
+        console.error('Eroare WebSocket audio:', error);
+    });
+}
+
+function pornesteMuzicaCamera() {
+    if (muzicaCameraPornita) return;
+    muzicaCameraPornita = true;
+
+    if (audioSocket && audioSocket.readyState === WebSocket.OPEN) {
+        audioSocket.send('ENTER_ROOM');
+    }
+}
+
+function opresteMuzicaCamera() {
+    if (!muzicaCameraPornita) return;
+    muzicaCameraPornita = false;
+
+    if (audioSocket && audioSocket.readyState === WebSocket.OPEN) {
+        audioSocket.send('EXIT_ROOM');
+    }
+}
+
+initAudioSocket();
+
 
 function creeazaDomCerNoapte() {
     const skyGeometry = new THREE.SphereGeometry(520, 64, 64);
@@ -1488,6 +1525,8 @@ function comutaModGeamInteractiv() {
     cameraInModFocus = !cameraInModFocus;
 
     if (cameraInModFocus) {
+        pornesteMuzicaCamera();
+
         const geamCurent = geamFocusMesh || geamInteractivMesh || geamuriInteractiveMeshes[0];
         const pozitieGeam = new THREE.Vector3();
         geamCurent.getWorldPosition(pozitieGeam);
@@ -1513,6 +1552,8 @@ function comutaModGeamInteractiv() {
             pervaz.material.opacity = opacity;
         });
     } else {
+        opresteMuzicaCamera();
+
         cameraTargetPosition.copy(cameraDefaultPosition);
         cameraTargetLookAt.copy(cameraDefaultLookAt);
         cameraTargetFov = cameraDefaultFov;
