@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+const loader = new GLTFLoader();
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x05011F);
@@ -15,12 +17,15 @@ const copaciCuVant = [];
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
+
 let geamInteractivMesh = null;
 let geamInteractivRamaMesh = null;
 let geamInteractivPervazMesh = null;
 const geamuriInteractiveMeshes = [];
 const geamuriInteractiveRame = [];
 const geamuriInteractivePervaze = [];
+const apartamente = []; 
+let apartamentCurent = null;
 let geamFocusMesh = null;
 let cameraAplica = null;
 let becTavanMesh = null;
@@ -38,6 +43,14 @@ let cameraTargetFov = cameraDefaultFov;
 // websocket pentru audio 
 let audioSocket = null;
 let muzicaCameraPornita = false;
+
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace; // converteste formatul final in srgb
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1;
+document.body.appendChild(renderer.domElement);
 
 function initAudioSocket() {
     audioSocket = new WebSocket('ws://localhost:8080');
@@ -313,12 +326,6 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 camera.position.set(0, 5.2, 19);
 camera.lookAt(0, 5.5, 0);
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.outputColorSpace = THREE.SRGBColorSpace; // converteste formatul final in srgb
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1;
-document.body.appendChild(renderer.domElement);
 
 creeazaCerNoapteRealist();
 
@@ -754,6 +761,844 @@ function creeazaUsaIntrare() {
     return grupUsa;
 }
 
+function creeazaCanapea2(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaCanapea2 = textureLoader.load('/textures/materialAlbastru.jpg');
+    texturaCanapea2.flipY = false;
+
+    loader.load('/models/canapea2.glb', (gltf) => {
+
+        const canapea2 = gltf.scene;
+
+        canapea2.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaCanapea2;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(canapea2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //canapea.rotation.x = -Math.PI / 2;
+        canapea2.position.sub(center);
+        canapea2.scale.set(0.01, 0.01, 0.01);
+
+        if (onLoaded) onLoaded(canapea2);
+
+    });
+}
+
+function creeazaScaun3(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaScaun3 = textureLoader.load('/textures/materialVerdeD.jpg');
+    texturaScaun3.flipY = false;
+
+    loader.load('/models/scaun3.glb', (gltf) => {
+
+        const scaun3 = gltf.scene;
+
+        scaun3.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaScaun3;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(scaun3);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        scaun3.position.sub(center);
+        scaun3.scale.set(0.3, 0.3, 0.3);
+
+        if (onLoaded) onLoaded(scaun3);
+
+    });
+}
+
+function creeazaMasa1(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaMasa1 = textureLoader.load('/textures/lemnDeschis.jpg');
+    texturaMasa1.flipY = false;
+
+    loader.load('/models/masa1.glb', (gltf) => {
+
+        const masa1 = gltf.scene;
+
+        masa1.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaMasa1;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(masa1);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        masa1.position.sub(center);
+        masa1.scale.set(0.13, 0.13, 0.13);
+
+        if (onLoaded) onLoaded(masa1);
+
+    });
+}
+
+function creeazaCovor1(onLoaded) {
+    loader.load('/models/covor1.glb', (gltf) => {
+
+        const covor1 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(covor1);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        covor1.rotation.x = -Math.PI / 2;
+        covor1.position.sub(center);
+        covor1.scale.set(0.01, 0.01, 0.01);
+
+        if (onLoaded) onLoaded(covor1);
+
+    });
+}
+
+function creeazaBirou1(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaBirou1 = textureLoader.load('/textures/lemnRosu.jpg');
+    texturaBirou1.flipY = false;
+
+    loader.load('/models/birou1.glb', (gltf) => {
+
+        const birou1 = gltf.scene;
+
+        birou1.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaBirou1;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(birou1);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        birou1.position.sub(center);
+        birou1.scale.set(0.7, 0.7, 0.7);
+
+        if (onLoaded) onLoaded(birou1);
+
+    });
+}
+
+function creeazaBirou2(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaBirou2 = textureLoader.load('/textures/lemnInchis.jpg');
+    texturaBirou2.flipY = false;
+
+    loader.load('/models/birou2.glb', (gltf) => {
+
+        const birou2 = gltf.scene;
+
+        birou2.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaBirou2;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(birou2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        birou2.position.sub(center);
+        birou2.scale.set(0.6, 0.6, 0.6);
+
+        if (onLoaded) onLoaded(birou2);
+
+    });
+}
+
+function creeazaBirou4(onLoaded) {
+    loader.load('/models/birou4.glb', (gltf) => {
+
+        const birou4 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(birou4);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        birou4.rotation.x = -Math.PI / 2;
+        birou4.position.sub(center);
+        birou4.scale.set(0.01, 0.01, 0.01);
+
+        if (onLoaded) onLoaded(birou4);
+
+    });
+}
+
+function creeazaBiblioteca1(onLoaded) {
+    loader.load('/models/biblioteca1.glb', (gltf) => {
+
+        const biblioteca1 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(biblioteca1);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        biblioteca1.position.sub(center);
+        biblioteca1.scale.set(30.0, 30.0, 30.0);
+
+        if (onLoaded) onLoaded(biblioteca1);
+
+    });
+}
+
+function creeazaBiblioteca2(onLoaded) {
+    loader.load('/models/biblioteca2.glb', (gltf) => {
+
+        const biblioteca2 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(biblioteca2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        biblioteca2.position.sub(center);
+        biblioteca2.scale.set(1.4, 1.4, 1.4);
+
+        if (onLoaded) onLoaded(biblioteca2);
+
+    });
+}
+
+function creeazaBiblioteca3(onLoaded) {
+    loader.load('/models/biblioteca3.glb', (gltf) => {
+
+        const biblioteca3 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(biblioteca3);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        biblioteca3.position.sub(center);
+        biblioteca3.scale.set(0.9, 0.9, 0.9);
+
+        if (onLoaded) onLoaded(biblioteca3);
+
+    });
+}
+
+function creeazaCalorifer(onLoaded) {
+    loader.load('/models/calorifer.glb', (gltf) => {
+
+        const calorifer = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(calorifer);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //calorifer.rotation.x = -Math.PI / 2;
+        calorifer.position.sub(center);
+        calorifer.scale.set(0.01, 0.01, 0.01);
+
+        if (onLoaded) onLoaded(calorifer);
+
+    });
+}
+
+function creeazaCarte(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaCarte = textureLoader.load('/textures/materialVerdeI.jpg');
+    texturaCarte.flipY = false;
+
+    loader.load('/models/carte1.glb', (gltf) => {
+
+        const carte = gltf.scene;
+
+        carte.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaCarte;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(carte);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //carte.rotation.x = -Math.PI / 2;
+        carte.position.sub(center);
+        carte.scale.set(0.1, 0.1, 0.1);
+
+        if (onLoaded) onLoaded(carte);
+
+    });
+}
+
+function creeazaCeas1(onLoaded) {
+    loader.load('/models/ceas1.glb', (gltf) => {
+
+        const ceas1 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(ceas1);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //ceas1.rotation.x = -Math.PI / 2;
+        ceas1.position.sub(center);
+        ceas1.scale.set(0.001, 0.001, 0.001);
+
+        if (onLoaded) onLoaded(ceas1);
+
+    });
+}
+
+function creeazaCovor2(onLoaded) {
+    loader.load('/models/covor2.glb', (gltf) => {
+
+        const covor2 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(covor2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        covor2.rotation.x = -Math.PI / 2;
+        covor2.position.sub(center);
+        covor2.scale.set(0.01, 0.01, 0.01);
+
+        if (onLoaded) onLoaded(covor2);
+
+    });
+}
+
+function creeazaDulap1(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaDulap1 = textureLoader.load('/textures/lemnVerde.jpg');
+    texturaDulap1.flipY = false;
+
+    loader.load('/models/dulap1.glb', (gltf) => {
+
+        const dulap1 = gltf.scene;
+
+        dulap1.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaDulap1;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(dulap1);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //dulap1.rotation.x = -Math.PI / 2;
+        dulap1.position.sub(center);
+        dulap1.scale.set(0.7, 0.7, 0.7);
+
+        if (onLoaded) onLoaded(dulap1);
+
+    });
+}
+
+function creeazaDulap2(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaDulap2 = textureLoader.load('/textures/lemnDeschis.jpg');
+    texturaDulap2.flipY = false;
+
+    loader.load('/models/dulap2.glb', (gltf) => {
+
+        const dulap2 = gltf.scene;
+
+        dulap2.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaDulap2;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(dulap2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //dulap2.rotation.x = -Math.PI / 2;
+        dulap2.position.sub(center);
+        dulap2.scale.set(0.01, 0.01, 0.01);
+
+        if (onLoaded) onLoaded(dulap2);
+
+    });
+}
+
+function creeazaLampa1(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaLampa1 = textureLoader.load('/textures/metalAuriu.jpg');
+    texturaLampa1.flipY = false;
+
+    loader.load('/models/lampa1.glb', (gltf) => {
+
+        const lampa1 = gltf.scene;
+
+        lampa1.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaLampa1;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(lampa1);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //lampa1.rotation.x = -Math.PI / 2;
+        lampa1.position.sub(center);
+        lampa1.scale.set(1.3, 1.3, 1.3);
+
+        if (onLoaded) onLoaded(lampa1);
+
+    });
+}
+
+function creeazaLampa2(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaLampa2 = textureLoader.load('/textures/metalAuriu.jpg');
+    texturaLampa2.flipY = false;
+
+    loader.load('/models/lampa2.glb', (gltf) => {
+
+        const lampa2 = gltf.scene;
+
+        lampa2.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaLampa2;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(lampa2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //lampa2.rotation.x = -Math.PI / 2;
+        lampa2.position.sub(center);
+        lampa2.scale.set(1.0, 1.0, 1.0);
+
+        if (onLoaded) onLoaded(lampa2);
+
+    });
+}
+
+function creeazaMasa3(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaMasa3 = textureLoader.load('/textures/lemnInchis.jpg');
+    texturaMasa3.flipY = false;
+
+    loader.load('/models/masa3.glb', (gltf) => {
+
+        const masa3 = gltf.scene;
+
+        masa3.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaMasa3;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(masa3);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //masa3.rotation.x = -Math.PI / 2;
+        masa3.position.sub(center);
+        masa3.scale.set(0.5, 0.5, 0.5);
+
+        if (onLoaded) onLoaded(masa3);
+
+    });
+}
+
+function creeazaMasa4(onLoaded) {
+    loader.load('/models/masa4.glb', (gltf) => {
+
+        const masa4 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(masa4);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //masa4.rotation.x = -Math.PI / 2;
+        masa4.position.sub(center);
+        masa4.scale.set(0.2, 0.2, 0.2);
+
+        if (onLoaded) onLoaded(masa4);
+
+    });
+}
+
+function creeazaNoptiera2(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaNoptiera2 = textureLoader.load('/textures/lemnInchis.jpg');
+    texturaNoptiera2.flipY = false;
+
+    loader.load('/models/noptiera2.glb', (gltf) => {
+
+        const noptiera2 = gltf.scene;
+
+        noptiera2.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaNoptiera2;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(noptiera2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //noptiera2.rotation.x = -Math.PI / 2;
+        noptiera2.position.sub(center);
+        noptiera2.scale.set(0.2, 0.2, 0.2);
+
+        if (onLoaded) onLoaded(noptiera2);
+
+    });
+}
+
+function creeazaPat1(onLoaded) {
+    loader.load('/models/pat1.glb', (gltf) => {
+
+        const pat1 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(pat1);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        pat1.rotation.x = -Math.PI / 2;
+        pat1.position.sub(center);
+        pat1.scale.set(0.01, 0.01, 0.01);
+
+        if (onLoaded) onLoaded(pat1);
+
+    });
+}
+
+function creeazaPat2(onLoaded) {
+    loader.load('/models/pat2.glb', (gltf) => {
+
+        const pat2 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(pat2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        pat2.rotation.x = -Math.PI / 2;
+        pat2.position.sub(center);
+        pat2.scale.set(0.01, 0.01, 0.01);
+
+        if (onLoaded) onLoaded(pat2);
+
+    });
+}
+
+function creeazaPat4(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaPat4 = textureLoader.load('/textures/materialVerdeD.jpg');
+    texturaPat4.flipY = false;
+
+    loader.load('/models/pat4.glb', (gltf) => {
+
+        const pat4 = gltf.scene;
+
+        pat4.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaPat4;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(pat4);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //pat4.rotation.x = -Math.PI / 2;
+        pat4.position.sub(center);
+        pat4.scale.set(0.8, 0.8, 0.8);
+
+        if (onLoaded) onLoaded(pat4);
+
+    });
+}
+
+function creeazaPat5(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaPat5 = textureLoader.load('/textures/lemnInchis.jpg');
+    texturaPat5.flipY = false;
+
+    loader.load('/models/pat5.glb', (gltf) => {
+
+        const pat5 = gltf.scene;
+
+        pat5.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaPat5;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(pat5);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //pat5.rotation.x = -Math.PI / 2;
+        pat5.rotation.y = -Math.PI / 2 ;
+        pat5.position.sub(center);
+        pat5.scale.set(0.15, 0.15, 0.15);
+
+        if (onLoaded) onLoaded(pat5);
+
+    });
+}
+
+function creeazaScaun2(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaScaun2 = textureLoader.load('/textures/materialAlbastru.jpg');
+    texturaScaun2.flipY = false;
+
+    loader.load('/models/scaun2.glb', (gltf) => {
+
+        const scaun2 = gltf.scene;
+        
+        scaun2.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaScaun2;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(scaun2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //scaun2.rotation.x = -Math.PI / 2;
+        scaun2.position.sub(center);
+        scaun2.scale.set(0.015, 0.015, 0.015);
+
+        if (onLoaded) onLoaded(scaun2);
+
+    });
+}
+
+function creeazaScaun4(onLoaded) {
+    loader.load('/models/scaun4.glb', (gltf) => {
+
+        const scaun4 = gltf.scene;
+
+        const box = new THREE.Box3().setFromObject(scaun4);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        scaun4.rotation.x = -Math.PI / 2;
+        scaun4.position.sub(center);
+        scaun4.scale.set(0.01, 0.01, 0.01);
+
+        if (onLoaded) onLoaded(scaun4);
+
+    });
+}
+
+function creeazaVanity(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaVanity = textureLoader.load('/textures/lemnRosu.jpg');
+    texturaVanity.flipY = false;
+
+    loader.load('/models/vanity.glb', (gltf) => {
+
+        const vanity = gltf.scene;
+
+        vanity.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaVanity;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(vanity);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        //vanity.rotation.x = -Math.PI / 2;
+        vanity.position.sub(center);
+        vanity.scale.set(0.3, 0.3, 0.3);
+
+        if (onLoaded) onLoaded(vanity);
+
+    });
+}
+
+function creeazaUsa2(onLoaded) {
+    const textureLoader = new THREE.TextureLoader();
+    const texturaUsa = textureLoader.load('/textures/lemnDeschis.jpg');
+
+    loader.load('/models/usa2.glb', (gltf) => {
+        const usa2 = gltf.scene;
+
+        usa2.traverse((child) => {
+
+            if (child.isMesh) {
+
+                child.material.map = texturaUsa;
+                child.material.needsUpdate = true;
+
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+
+        });
+
+        const box = new THREE.Box3().setFromObject(usa2);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        usa2.rotation.y = -Math.PI / 2;
+        usa2.position.sub(center);
+        usa2.scale.set(0.3, 0.3, 0.3);
+
+        if (onLoaded) onLoaded(usa2);
+
+    });
+}
+
+function creeazaPlantaMare() {
+    const planta = new THREE.Group();
+
+    const ghiveci = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.35, 0.25, 0.7, 16),
+        new THREE.MeshStandardMaterial({ color: 0x6b4f3a })
+    );
+    planta.add(ghiveci);
+
+    const tulpina = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.03, 0.05, 1.2, 10),
+        new THREE.MeshStandardMaterial({ color: 0x2f5d2f })
+    );
+    tulpina.position.y = 0.8;
+    planta.add(tulpina);
+
+    for (let i = 0; i < 20; i++) {
+        const frunza = new THREE.Mesh(
+            new THREE.SphereGeometry(0.18, 12, 12),
+            new THREE.MeshStandardMaterial({ color: 0x2f7a3a })
+        );
+
+        frunza.position.set(
+            Math.random() * 0.4 - 0.2,
+            1.2 + Math.random() * 0.6,
+            Math.random() * 0.4 - 0.2
+        );
+        frunza.scale.set(1, 0.4, 0.8);
+
+        planta.add(frunza);
+    }
+
+    return planta;
+}
+
 function creeazaCameraVizibilaGeamDreaptaSus() {
     const grupCamera = new THREE.Group();
     const latime = 3.6;
@@ -798,31 +1643,6 @@ function creeazaCameraVizibilaGeamDreaptaSus() {
     plintaSpate.position.set(centruX, -1.34, fataZ - adancime + 0.08);
     grupCamera.add(plintaSpate);
 
-    const birou = new THREE.Mesh(
-        new THREE.BoxGeometry(1.4, 0.08, 0.65),
-        matMobilierInterior
-    );
-    birou.position.set(4.5, -0.75, -0.95);
-    grupCamera.add(birou);
-
-    const piciorBirouStanga = new THREE.Mesh(
-        new THREE.BoxGeometry(0.08, 0.7, 0.08),
-        matMobilierInterior
-    );
-    piciorBirouStanga.position.set(3.9, -1.1, -1.2);
-    grupCamera.add(piciorBirouStanga);
-
-    const piciorBirouDreapta = piciorBirouStanga.clone();
-    piciorBirouDreapta.position.set(5.1, -1.1, -1.2);
-    grupCamera.add(piciorBirouDreapta);
-
-    const fotoliu = new THREE.Mesh(
-        new THREE.BoxGeometry(0.6, 0.65, 0.6),
-        new THREE.MeshStandardMaterial({ color: 0x3e4b5e, roughness: 0.8, metalness: 0.05 })
-    );
-    fotoliu.position.set(5.45, -1.15, -0.35);
-    grupCamera.add(fotoliu);
-
     const covor = new THREE.Mesh(
         new THREE.BoxGeometry(2.1, 0.02, 1.5),
         new THREE.MeshLambertMaterial({ color: 0x4f5d6f })
@@ -830,13 +1650,154 @@ function creeazaCameraVizibilaGeamDreaptaSus() {
     covor.position.set(5, -1.39, -0.45);
     grupCamera.add(covor);
 
-    const tablou = new THREE.Mesh(
-        new THREE.BoxGeometry(0.9, 0.5, 0.03),
-        new THREE.MeshStandardMaterial({ color: 0xa2b7cf, emissive: 0x233246, emissiveIntensity: 0.12 })
-    );
-    tablou.position.set(5.95, 0.2, -1.95);
-    tablou.rotation.y = -Math.PI / 2;
-    grupCamera.add(tablou);
+    //EXEMPLE POZITII 
+    //pozitie general ok, patul la perete, canapeaua la fel, pozitii de genul
+    //am scalat obiectele ok (zic eu) in fucntiile de creeaza
+
+    // creeazaCanapea2((canapea2) => {
+    //     canapea2.position.set(4.3, -1.2, -1.4);
+    //     grupCamera.add(canapea2);
+    // });
+
+    // creeazaScaun3((scaun3) => {
+    //     scaun3.position.set(4.3, -1.2, -1.0);
+    //     grupCamera.add(scaun3);
+    // });
+
+    // creeazaMasa1((masa1) => {
+    //     masa1.position.set(3.85, -1.5, -1.0);
+    //     grupCamera.add(masa1);
+    // });
+
+    // creeazaCovor1((covor1) => {
+    //     covor1.position.set(4.6, -1.3, -0.6);
+    //     grupCamera.add(covor1);
+    // });
+
+    // creeazaBirou1((birou1) => {
+    //     birou1.position.set(3.9, -1.2, -0.6);
+    //     grupCamera.add(birou1);
+    // });
+
+    // creeazaBirou2((birou2) => {
+    //     birou2.position.set(6.15, -1.2, -1.4);
+    //     grupCamera.add(birou2);
+    // });
+
+    // creeazaBirou4((birou4) => {
+    //     birou4.position.set(5.8, -1.3, -1.4);
+    //     grupCamera.add(birou4);
+    // });
+
+    // creeazaBiblioteca1((biblioteca1) => {
+    //     biblioteca1.position.set(4.8, -1.0, -1.4);
+    //     grupCamera.add(biblioteca1);
+    // });
+
+    // creeazaBiblioteca2((biblioteca2) => {
+    //     biblioteca2.position.set(5.8, -1.3, -1.4);
+    //     grupCamera.add(biblioteca2);
+    // });
+
+    // creeazaBiblioteca3((biblioteca3) => {
+    //     biblioteca3.position.set(5.8, -1.3, -1.4);
+    //     grupCamera.add(biblioteca3);
+    // });
+
+    // creeazaCalorifer((calorifer) => {
+    //     calorifer.position.set(4.2, -1.3, -1.7);
+    //     grupCamera.add(calorifer);
+    // });
+
+    // creeazaCarte((carte) => {
+    //     carte.position.set(5.2, -0.5, -1.2);
+    //     grupCamera.add(carte);
+    // });
+
+    // creeazaCeas1((ceas1) => {
+    //     ceas1.position.set(5.2, -0.5, -1.2);
+    //     grupCamera.add(ceas1);
+    // });
+
+    // creeazaCovor2((covor2) => {
+    //     covor2.position.set(5.2, -1.3, -0.6);
+    //     grupCamera.add(covor2);
+    // });
+
+    // creeazaDulap1((dulap1) => {
+    //     dulap1.position.set(4.2, -1.3, -1.7);
+    //     grupCamera.add(dulap1);
+    // });
+
+    // creeazaDulap2((dulap2) => {
+    //     dulap2.position.set(4.6, -1.3, -1.7);
+    //     grupCamera.add(dulap2);
+    // });
+
+    // creeazaLampa1((lampa1) => {
+    //     lampa1.position.set(5.2, -0.3, -1.2);
+    //     grupCamera.add(lampa1);
+    // });
+
+    // creeazaLampa2((lampa2) => {
+    //     lampa2.position.set(4.5, -0.9, -1.2);
+    //     grupCamera.add(lampa2);
+    // });
+
+    // creeazaMasa3((masa3) => {
+    //     masa3.position.set(4.5, -1.3, -1.2);
+    //     grupCamera.add(masa3);
+    // });
+
+    // creeazaMasa4((masa4) => {
+    //     masa4.position.set(4.5, -1.2, -1.2);
+    //     grupCamera.add(masa4);
+    // });
+
+    // creeazaNoptiera2((noptiera2) => {
+    //     noptiera2.position.set(4.5, -1.2, -1.2);
+    //     grupCamera.add(noptiera2);
+    // });
+
+    // creeazaPat1((pat1) => {
+    //     pat1.position.set(4.7, -0.8, -1.0);
+    //     grupCamera.add(pat1);
+    // });
+
+    // creeazaPat2((pat2) => {
+    //     pat2.position.set(5.9, -0.8, -1.0);
+    //     grupCamera.add(pat2);
+    // });
+
+    // creeazaPat4((pat4) => {
+    //     pat4.position.set(5.55, -1.2, 0.4);
+    //     grupCamera.add(pat4);
+    // });
+
+    // creeazaPat5((pat5) => {
+    //     pat5.position.set(5.1, -2.0, -1.3);
+    //     grupCamera.add(pat5);
+    // });
+
+    // creeazaScaun2((scaun2) => {
+    //     scaun2.position.set(5.1, -1.5, -1.3);
+    //     grupCamera.add(scaun2);
+    // });
+
+    // creeazaScaun4((scaun4) => {
+    //     scaun4.position.set(5.1, -1.3, -1.3);
+    //     grupCamera.add(scaun4);
+    // });
+
+    // creeazaVanity((vanity) => {
+    //     vanity.position.set(4.4, -0.5, -1.1);
+    //     grupCamera.add(vanity);
+    // });
+
+    // creeazaUsa2((usa2) => {
+    //     usa2.position.set(3.8, -1.2, -1.6);
+    //     grupCamera.add(usa2);
+    // });
 
     return grupCamera;
 }
@@ -931,7 +1892,7 @@ function creeazaEtaj(numarEtaj, esteParter = false) {
 
     const pozitiiFerestreX = [-5.8, -4.2, -1.8, 1.8, 4.2, 5.8]; // coordonate X pt cele 6 ferestre pe latime
 
-    pozitiiFerestreX.forEach(x => {
+    pozitiiFerestreX.forEach((x, index) => {
         // usa de la parter
         if (esteParter && (x === -1.8 || x === 1.8)) {
             return;
@@ -940,40 +1901,45 @@ function creeazaEtaj(numarEtaj, esteParter = false) {
         const win = creeazaFereastra();
         win.position.set(x, 0, 2.6); // pozitionata pe fatada
         grupEtaj.add(win);
+        const esteCameraInteractiva = 
+            !(esteParter && (index === 2 || index === 3)); 
 
-        const esteGeamSusDreapta = numarEtaj === numarEtaje - 1 && x === 5.8;
-        const esteGeamSusDreaptaVecin = numarEtaj === numarEtaje - 1 && x === 4.2;
-        if (esteGeamSusDreapta || esteGeamSusDreaptaVecin) {
-            const geamSticlaMesh = win.userData.sticla;
-            const geamRamaMesh = win.userData.rama;
-            const geamPervazMesh = win.userData.pervaz;
+        if (esteCameraInteractiva) {
 
-            const matRamaInteractiva = matAlbRama.clone();
-            matRamaInteractiva.transparent = true;
-            matRamaInteractiva.opacity = 0.95;
-            geamRamaMesh.material = matRamaInteractiva;
-            geamPervazMesh.material = matRamaInteractiva;
+            const geamSticlaMesh = win.userData.sticla; 
+            const geamRamaMesh = win.userData.rama; 
+            const geamPervazMesh = win.userData.pervaz; 
 
-            geamSticlaMesh.material = new THREE.MeshStandardMaterial({
-                color: 0x05070d,
-                transparent: true,
-                opacity: 0.9,
-                depthWrite: false,
-                roughness: 0.92,
-                metalness: 0.02,
-                emissive: 0x000000,
-                emissiveIntensity: 0
-            });
+            const matRamaInteractiva = matAlbRama.clone(); 
+            matRamaInteractiva.transparent = true; 
+            matRamaInteractiva.opacity = 0.95; 
 
-            geamuriInteractiveMeshes.push(geamSticlaMesh);
-            geamuriInteractiveRame.push(geamRamaMesh);
-            geamuriInteractivePervaze.push(geamPervazMesh);
-
-            if (esteGeamSusDreapta) {
-                geamInteractivMesh = geamSticlaMesh;
-                geamInteractivRamaMesh = geamRamaMesh;
-                geamInteractivPervazMesh = geamPervazMesh;
-            }
+            geamRamaMesh.material = matRamaInteractiva; 
+            geamPervazMesh.material = matRamaInteractiva; 
+            
+            geamSticlaMesh.material = new THREE.MeshStandardMaterial({ 
+                
+                color: 0x05070d, 
+                transparent: true, 
+                opacity: 0.9, 
+                depthWrite: false, 
+                roughness: 0.92, 
+                metalness: 0.02, 
+                emissive: 0x000000, 
+                emissiveIntensity: 0 
+            }); 
+            
+            geamuriInteractiveMeshes.push(geamSticlaMesh); 
+            geamuriInteractiveRame.push(geamRamaMesh); 
+            geamuriInteractivePervaze.push(geamPervazMesh); 
+            
+            apartamente.push({ 
+                etaj: numarEtaj, 
+                coloana: index, 
+                geamMesh: geamSticlaMesh, 
+                ramaMesh: geamRamaMesh, 
+                pervazMesh: geamPervazMesh 
+            }); 
         }
     });
 
@@ -1517,6 +2483,7 @@ const plintaMesh = new THREE.Mesh(bazaGeom, matGriScurt);
 plintaMesh.position.y = -inaltimeEtaj / 2 + 0.12;
 grupCladire.add(plintaMesh);
 
+//nefolosita dupa adaugarea navigarii intre camere
 function comutaModGeamInteractiv() {
     if (geamuriInteractiveMeshes.length === 0 || !luminaCamera || !becTavanMesh) {
         return;
@@ -1573,13 +2540,100 @@ function comutaModGeamInteractiv() {
     }
 }
 
+function focusPeApartament(ap) { 
+
+    if (!ap) return; 
+
+    const pozitieGeam = new THREE.Vector3(); 
+    ap.geamMesh.getWorldPosition(pozitieGeam); 
+    
+    cameraTargetPosition.set( 
+        pozitieGeam.x, 
+        pozitieGeam.y + 0.03, 
+        pozitieGeam.z + 0.75 
+    ); 
+    
+    cameraTargetLookAt.set( 
+        pozitieGeam.x, 
+        pozitieGeam.y, 
+        pozitieGeam.z - 2.35 
+    ); 
+    
+    cameraTargetFov = 46; 
+    cameraInModFocus = true; 
+    pornesteMuzicaCamera(); 
+    
+    if (luminaCamera) { 
+        luminaCamera.intensity = 2.9; 
+    } 
+    
+    if (becTavanMesh) { 
+        becTavanMesh.material.emissiveIntensity = 1.15; 
+    } 
+    
+    geamuriInteractiveMeshes.forEach(mesh => { 
+        mesh.visible = true; 
+        mesh.material.opacity = 0.9; 
+    }); 
+    
+    ap.geamMesh.visible = false; 
+    
+    geamuriInteractiveRame.forEach((rama, index) => { 
+        
+        const pervaz = geamuriInteractivePervaze[index]; 
+        const apRef = apartamente[index]; 
+        
+        const esteCurent = 
+            apRef.geamMesh === ap.geamMesh; 
+            
+        rama.material.opacity = 
+            esteCurent ? 0.24 : 0.95; 
+        
+        pervaz.material.opacity = 
+            esteCurent ? 0.24 : 0.95; }); 
+        
+}
+
+function iesireDinFocus() { 
+    
+    cameraInModFocus = false; 
+    apartamentCurent = null; 
+    opresteMuzicaCamera(); 
+    
+    cameraTargetPosition.copy(cameraDefaultPosition); 
+    cameraTargetLookAt.copy(cameraDefaultLookAt); 
+    cameraTargetFov = cameraDefaultFov; 
+    
+    if (luminaCamera) { 
+        luminaCamera.intensity = 0; 
+    } 
+    
+    if (becTavanMesh) { 
+        becTavanMesh.material.emissiveIntensity = 0; 
+    } 
+    
+    geamuriInteractiveMeshes.forEach(mesh => { 
+        mesh.visible = true; 
+        mesh.material.opacity = 0.9; 
+    }); 
+    
+    geamuriInteractiveRame.forEach((rama, index) => { 
+        const pervaz = geamuriInteractivePervaze[index]; 
+        rama.material.opacity = 0.95; 
+        pervaz.material.opacity = 0.95; 
+    }); 
+    
+    geamFocusMesh = null; 
+
+}
+
 function onPointerDown(event) {
     if (geamuriInteractiveMeshes.length === 0) {
         return;
     }
 
     if (cameraInModFocus) {
-        comutaModGeamInteractiv();
+        iesireDinFocus();
         return;
     }
 
@@ -1590,13 +2644,66 @@ function onPointerDown(event) {
     raycaster.setFromCamera(pointer, camera);
     const intersectii = raycaster.intersectObjects(geamuriInteractiveMeshes, false);
     if (intersectii.length > 0) {
-        geamFocusMesh = intersectii[0].object;
-        comutaModGeamInteractiv();
+
+        const mesh = intersectii[0].object; 
+
+        apartamentCurent = apartamente.find( 
+            a => a.geamMesh === mesh 
+        ); 
+        
+        geamFocusMesh = mesh; 
+        
+        focusPeApartament(apartamentCurent);
     }
 }
 
 renderer.domElement.addEventListener('pointerdown', onPointerDown);
+window.addEventListener('keydown', onKeyDown);
 
+function onKeyDown(event) { 
+    
+    if (!apartamentCurent) 
+        return; 
+
+    let etaj = apartamentCurent.etaj; 
+    let coloana = apartamentCurent.coloana; 
+    
+    switch(event.key) { 
+        case 'ArrowLeft': 
+            coloana--; 
+            break; 
+
+        case 'ArrowRight': 
+            coloana++; 
+            break;
+            
+        case 'ArrowUp': 
+            etaj++; 
+            break; 
+            
+        case 'ArrowDown': 
+            etaj--; 
+            break; 
+            
+        default: 
+            return;
+    } 
+    
+    const apartamentNou = apartamente.find(a => 
+        a.etaj === etaj && 
+        a.coloana === coloana 
+    ); 
+    
+    if (apartamentNou) { 
+        
+        apartamentCurent = apartamentNou; 
+        geamFocusMesh = apartamentNou.geamMesh; 
+        focusPeApartament(apartamentNou); 
+    } 
+    else { 
+        iesireDinFocus(); 
+    } 
+}
 
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
