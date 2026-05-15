@@ -1802,6 +1802,944 @@ function creeazaCameraVizibilaGeamDreaptaSus() {
     return grupCamera;
 }
 
+function creeazaCamera1() {
+    const grupCamera = new THREE.Group();
+
+    const latime = 2.3;
+    const inaltime = 3;
+    const adancime = 3;
+    const frontZ = 2.45;
+    const grosimePerete = 0.08;
+
+    // podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    // pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        new THREE.MeshLambertMaterial({ color: 0x524242}),
+        matPereteInteriorCamera
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        new THREE.MeshLambertMaterial({ color: 0x000000}),
+        matPereteInteriorCamera
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        new THREE.MeshLambertMaterial({ color: 0x000000}),
+        matPereteInteriorCamera
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    // plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    // mobila
+    creeazaBirou2((birou2) => {
+        birou2.position.set(0.2, -1.2, frontZ - 2.2);
+        birou2.rotation.y = 0;
+        grupCamera.add(birou2);
+    });
+
+    creeazaScaun3((scaun3) => {
+        scaun3.position.set(0, -1.25, frontZ - 1.7);
+        scaun3.rotation.y = 4;
+        grupCamera.add(scaun3);
+    });
+
+    creeazaCovor2((covor2) => {
+        covor2.position.set(0, -1.3, 0.8);
+        grupCamera.add(covor2);
+    });
+
+    creeazaLampa2((lampa2) => {
+        lampa2.position.set(-0.3, -0.79, frontZ- 2.5);
+        grupCamera.add(lampa2);
+    });
+
+    return grupCamera;
+}
+
+function creeazaCamera2() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.2;
+    const inaltime = 2.9;
+    const adancime = 2.2;
+    const fataZ = 2.45;
+    const grosimePerete = 0.08;
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        new THREE.MeshLambertMaterial({ color: 0x45423E}),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, fataZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        new THREE.MeshLambertMaterial({ color: 0xD9B280}),
+        matPereteInteriorCamera
+    );
+    pereteSpate.position.set(0, -0.08, fataZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        new THREE.MeshLambertMaterial({ color: 0xD9B280}),
+        matPereteInteriorCamera
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, fataZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        new THREE.MeshLambertMaterial({ color: 0xD9B280}),
+        matPereteInteriorCamera
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, fataZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, fataZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    //mobila
+    creeazaCanapea2((canapea2) => {
+        canapea2.position.set(-0.05, -1.15, fataZ - 1.9);
+        canapea2.rotation.y = 0;
+        grupCamera.add(canapea2);
+    });
+
+    creeazaMasa1((masa1) => {
+        masa1.position.set(-0.05, -1.7, fataZ - 0.8);
+        masa1.rotation.y = Math.PI / 2;
+        grupCamera.add(masa1);
+    });
+
+    creeazaCovor1((covor1) => {
+        covor1.position.set(0, -1.3, fataZ - 1.2);
+        grupCamera.add(covor1);
+    });
+
+    creeazaCeas1((ceas1) => {
+        ceas1.position.set(0, 0.5, fataZ - 1.5);
+        grupCamera.add(ceas1);
+    });
+
+    return grupCamera;
+}
+
+function creeazaCamera3() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.2;
+    const inaltime = 2.9;
+    const adancime = 2.2;
+    const fataZ = 2.45;
+    const grosimePerete = 0.08;
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, fataZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        new THREE.MeshLambertMaterial({ color: 0xb88d8d}),
+        matPereteInteriorCamera
+    );
+    pereteSpate.position.set(0, -0.08, fataZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+         new THREE.MeshLambertMaterial({ color: 0xb88d8d}),
+        matPereteInteriorCamera
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, fataZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        new THREE.MeshLambertMaterial({ color: 0xb88d8d}),
+        matPereteInteriorCamera
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, fataZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, fataZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    //mobila
+    creeazaBirou1((birou1) => {
+        birou1.position.set(-0.5, -1.2, fataZ - 0.85);
+        birou1.rotation.y = 0;
+        grupCamera.add(birou1);
+    });
+
+    creeazaCeas1((ceas1) => {
+        ceas1.position.set(0.5, 0.5, fataZ - 1.5);
+        grupCamera.add(ceas1);
+    });
+
+    creeazaLampa2((lampa2) => {
+        lampa2.position.set(-0.7, -0.65, fataZ - 1.3);
+        grupCamera.add(lampa2);
+    });
+
+    creeazaCalorifer((calorifer) => {
+        calorifer.position.set(-0.1, -0.9, fataZ - 1.5);
+        grupCamera.add(calorifer);
+    });
+
+    creeazaScaun4((scaun4) => {
+        scaun4.position.set(0, -1.2, fataZ - 0.85);
+        scaun4.rotation.z = 4;
+        grupCamera.add(scaun4);
+    });
+    return grupCamera;
+}
+
+function creeazaCamera4() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.0;
+    const inaltime = 2.7;
+    const adancime = 2.2;
+    const frontZ = 2.45;
+    const grosimePerete = 0.12;
+
+    //culori pereti
+    const matPereteSpate = new THREE.MeshLambertMaterial({ color: 0x7b8f72 });
+    const matPereteLaterale = new THREE.MeshLambertMaterial({ color: 0xa7b39a });
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        matPereteSpate
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    // mobila
+    creeazaScaun3((scaun3) => {
+        scaun3.position.set(-0.25, -1.25, frontZ - 1.55);
+        scaun3.rotation.y = Math.PI / 2;
+        grupCamera.add(scaun3);
+    });
+
+    creeazaMasa3((masa3) => {
+        masa3.position.set(0.35, -1.32, frontZ - 1.2);
+        grupCamera.add(masa3);
+    });
+
+    creeazaCovor2((covor2) => {
+        covor2.position.set(0, -1.3, frontZ - 1);
+        grupCamera.add(covor2);
+    });
+
+    creeazaLampa1((lampa1) => {
+        lampa1.position.set(0.4, 0.75, frontZ - 2);
+        grupCamera.add(lampa1);
+    });
+
+    creeazaCarte((carte) => {
+        carte.position.set(0.15, -0.6, frontZ - 1);
+        grupCamera.add(carte);
+    });
+
+    const planta = creeazaPlantaMare();
+    planta.position.set(-0.8, -1.36, frontZ - 0.85);
+    planta.rotation.y = -0.45;
+    grupCamera.add(planta);
+
+    return grupCamera;
+}
+
+function creeazaCamera5() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.0;
+    const inaltime = 2.7;
+    const adancime = 2.2;
+    const frontZ = 2.45;
+    const grosimePerete = 0.12;
+
+    //culori pereti
+    const matPereteSpate = new THREE.MeshLambertMaterial({ color: 0x5c7fa8 });
+    const matPereteLaterale = new THREE.MeshLambertMaterial({ color: 0x7e97bc });
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        matPereteSpate
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    //mobila
+    creeazaScaun4((scaun4) => {
+        scaun4.position.set(0, -1.25, frontZ - 1.7);
+        grupCamera.add(scaun4);
+    });
+
+    creeazaDulap1((dulap1) => {
+        dulap1.position.set(-0.35, -1.15, frontZ - 1.15);
+        dulap1.rotation.y = 0;
+        grupCamera.add(dulap1);
+    });
+
+    creeazaCeas1((ceas1) => {
+        ceas1.position.set(0, 0.5, frontZ - 1.45);
+        grupCamera.add(ceas1);
+    });
+
+    creeazaLampa2((lampa2) => {
+        lampa2.position.set(-0.55, -0.5, frontZ - 0.7);
+        grupCamera.add(lampa2);
+    });
+
+    const planta = creeazaPlantaMare();
+    planta.position.set(0.75, -1.36, frontZ - 0.75);
+    planta.rotation.y = -0.3;
+    grupCamera.add(planta);
+
+    return grupCamera;
+}
+
+function creeazaCamera6() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.0;
+    const inaltime = 3;
+    const adancime = 2.2;
+    const frontZ = 2.45;
+    const grosimePerete = 0.12;
+
+    //culori pereti
+    const matPereteSpate = new THREE.MeshLambertMaterial({ color: 0x9178a5 });
+    const matPereteLaterale = new THREE.MeshLambertMaterial({ color: 0xbba5ca });
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        matPereteSpate
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    //mobila
+    creeazaPat2((pat2) => {
+        pat2.position.set(-0.2, -0.9, frontZ - 1.2);
+        pat2.rotation.y = 0;
+        grupCamera.add(pat2);
+    });
+
+    creeazaNoptiera2((noptiera2) => {
+        noptiera2.position.set(0.75, -1.3, frontZ - 1.5);
+        grupCamera.add(noptiera2);
+    });
+
+    creeazaCeas1((ceas1) => {
+        ceas1.position.set(0.8, -0.63, frontZ - 1.5);
+        grupCamera.add(ceas1);
+    });
+
+    const planta = creeazaPlantaMare();
+    planta.position.set(0.8, -1.36, frontZ - 0.95);
+    planta.rotation.y = -0.5;
+    grupCamera.add(planta);
+
+    return grupCamera;
+}
+
+function creeazaCamera7() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.0;
+    const inaltime = 3;
+    const adancime = 2.2;
+    const frontZ = 2.45;
+    const grosimePerete = 0.12;
+
+    //culori perete
+    const matPereteSpate = new THREE.MeshLambertMaterial({ color: 0x8a5a3b });
+    const matPereteLaterale = new THREE.MeshLambertMaterial({ color: 0xd6b894 });
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        matPereteSpate
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    creeazaBirou4((birou4) => {
+        birou4.position.set(-0.05, -0.6, frontZ - 1.75);
+        birou4.rotation.y = Math.PI;
+        grupCamera.add(birou4);
+    });
+
+    creeazaScaun2((scaun2) => {
+        scaun2.position.set(-0.1, -1.5, frontZ - 0.9);
+        scaun2.rotation.y = 4;
+        grupCamera.add(scaun2);
+    });
+
+    creeazaLampa2((lampa2) => {
+        lampa2.position.set(-0.25, -0.6, frontZ - 1.65);
+        grupCamera.add(lampa2);
+    });
+
+    creeazaCeas1((ceas1) => {
+        ceas1.position.set(0.4, 0.45, frontZ - 1.5);
+        grupCamera.add(ceas1);
+    });
+
+    const planta = creeazaPlantaMare();
+    planta.position.set(0.75, -1.36, frontZ - 0.85);
+    planta.rotation.y = -0.25;
+    grupCamera.add(planta);
+
+    return grupCamera;
+}
+
+function creeazaCamera8() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.0;
+    const inaltime = 3;
+    const adancime = 2.2;
+    const frontZ = 2.45;
+    const grosimePerete = 0.12;
+
+    //culori pereti
+    const matPereteSpate = new THREE.MeshLambertMaterial({ color: 0x507d7b });
+    const matPereteLaterale = new THREE.MeshLambertMaterial({ color: 0x8aa3a1 });
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        matPereteSpate
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    creeazaCanapea2((canapea2) => {
+        canapea2.position.set(0, -1.15, frontZ - 1.6);
+        grupCamera.add(canapea2);
+    });
+
+    creeazaMasa4((masa4) => {
+        masa4.position.set(0.1, -1.22, frontZ - 1.0);
+        grupCamera.add(masa4);
+    });
+
+    creeazaCovor1((covor1) => {
+        covor1.position.set(0, -1.38, frontZ - 1.2);
+        grupCamera.add(covor1);
+    });
+
+    creeazaCeas1((ceas1) => {
+        ceas1.position.set(0, 0.45, frontZ - 1.5);
+        grupCamera.add(ceas1);
+    });
+
+    const planta = creeazaPlantaMare();
+    planta.position.set(0.8, -1.36, frontZ - 0.6);
+    planta.rotation.y = -0.35;
+    grupCamera.add(planta);
+
+    return grupCamera;
+}
+
+function creeazaCamera9() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.0;
+    const inaltime = 3;
+    const adancime = 2.2;
+    const frontZ = 2.45;
+    const grosimePerete = 0.12;
+
+    //culoare perete
+    const matPereteSpate = new THREE.MeshLambertMaterial({ color: 0x734f4f });
+    const matPereteLaterale = new THREE.MeshLambertMaterial({ color: 0xb18b82 });
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        matPereteSpate
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+
+    creeazaDulap1((dulap1) => {
+        dulap1.position.set(0.75, -1.15, frontZ - 1);
+        dulap1.rotation.y = Math.PI;
+        grupCamera.add(dulap1);
+    });
+
+    creeazaLampa1((lampa1) => {
+        lampa1.position.set(-0.4, 0.5, frontZ - 1.55);
+        grupCamera.add(lampa1);
+    });
+
+    creeazaCeas1((ceas1) => {
+        ceas1.position.set(0.3, 0.45, frontZ - 1.5);
+        grupCamera.add(ceas1);
+    });
+
+    creeazaCovor1((covor) => {    
+        covor.position.set(0, -1.2, frontZ - 1.2);
+        grupCamera.add(covor);
+    });
+
+    const planta = creeazaPlantaMare();
+    planta.position.set(-0.8, -1.36, frontZ - 0.75);
+    planta.rotation.y = 0.35;
+    grupCamera.add(planta);
+
+    return grupCamera;
+}
+
+function creeazaCamera10() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.0;
+    const inaltime = 3;
+    const adancime = 2.2;
+    const frontZ = 2.45;
+    const grosimePerete = 0.12;
+
+    //culori pereti
+    const matPereteSpate = new THREE.MeshLambertMaterial({ color: 0x537c8f });
+    const matPereteLaterale = new THREE.MeshLambertMaterial({ color: 0x89a9ba });
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        matPereteSpate
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    //mobila
+    creeazaScaun4((scaun4) => {
+        scaun4.position.set(0.25, -1.25, frontZ - 0.7);
+        scaun4.rotation.z = Math.PI;
+        grupCamera.add(scaun4);
+    });
+
+    creeazaMasa4((masa4) => {
+        masa4.position.set(-0.15, -1.2, frontZ - 1.2);
+        grupCamera.add(masa4);
+    });
+
+    creeazaCovor2((covor2) => {
+        covor2.position.set(0, -1.3, frontZ - 1);
+        grupCamera.add(covor2);
+    });
+
+    creeazaLampa1((lampa1) => {
+        lampa1.position.set(0.5, 0.5, frontZ - 1.93);
+        grupCamera.add(lampa1);
+    });
+
+    const planta = creeazaPlantaMare();
+    planta.position.set(-0.75, -1.36, frontZ - 0.6);
+    planta.rotation.y = 0.4;
+    grupCamera.add(planta);
+
+    return grupCamera;
+}
+
+function creeazaCamera11() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.0;
+    const inaltime = 3;
+    const adancime = 2.2;
+    const frontZ = 2.45;
+    const grosimePerete = 0.12;
+
+    //culori pereti
+    const matPereteSpate = new THREE.MeshLambertMaterial({ color: 0x303f6f });
+    const matPereteLaterale = new THREE.MeshLambertMaterial({ color: 0x5f72a2 });
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        matPereteSpate
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    //mobila
+    creeazaScaun2((scaun2) => {
+        scaun2.position.set(0.25, -1.25, frontZ - 0.5);
+        scaun2.rotation.y = - Math.PI / 4;
+        grupCamera.add(scaun2);
+    });
+
+    creeazaDulap1((dulap1) => {
+        dulap1.position.set(-0.35, -1.25, frontZ - 1.15);
+        dulap1.rotation.y = Math.PI;
+        grupCamera.add(dulap1);
+    });
+
+    creeazaCeas1((ceas1) => {
+        ceas1.position.set(0, 0.5, frontZ - 1.45);
+        grupCamera.add(ceas1);
+    });
+
+    creeazaLampa2((lampa2) => {
+        lampa2.position.set(-0.55, -0.5, frontZ - 1.45);
+        grupCamera.add(lampa2);
+    });
+
+    const planta = creeazaPlantaMare();
+    planta.position.set(-0.75, -1.36, frontZ - 0.75);
+    planta.rotation.y = 0.3;
+    grupCamera.add(planta);
+
+    return grupCamera;
+}
+
+function creeazaCamera12() {
+    const grupCamera = new THREE.Group();
+    const latime = 2.0;
+    const inaltime = 3;
+    const adancime = 2.2;
+    const frontZ = 2.45;
+    const grosimePerete = 0.12;
+
+    //culori pereti
+    const matPereteSpate = new THREE.MeshLambertMaterial({ color: 0x8b6d8c });
+    const matPereteLaterale = new THREE.MeshLambertMaterial({ color: 0xc7acc9 });
+
+    //podea
+    const podea = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.06, adancime),
+        matPodeaInteriorCamera
+    );
+    podea.position.set(0, -1.36, frontZ - adancime / 2);
+    grupCamera.add(podea);
+
+    //pereti
+    const pereteSpate = new THREE.Mesh(
+        new THREE.BoxGeometry(latime + grosimePerete * 2, inaltime, grosimePerete),
+        matPereteSpate
+    );
+    pereteSpate.position.set(0, -0.08, frontZ - adancime + grosimePerete / 2);
+    grupCamera.add(pereteSpate);
+
+    const pereteStanga = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteStanga.position.set(-latime / 2 - grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteStanga);
+
+    const pereteDreapta = new THREE.Mesh(
+        new THREE.BoxGeometry(grosimePerete, inaltime, adancime + grosimePerete),
+        matPereteLaterale
+    );
+    pereteDreapta.position.set(latime / 2 + grosimePerete / 2, -0.08, frontZ - adancime / 2);
+    grupCamera.add(pereteDreapta);
+
+    //plinta
+    const plinta = new THREE.Mesh(
+        new THREE.BoxGeometry(latime, 0.12, 0.05),
+        new THREE.MeshLambertMaterial({ color: 0xc9c1b3 })
+    );
+    plinta.position.set(0, -1.34, frontZ - adancime + 0.1);
+    grupCamera.add(plinta);
+
+    //mobila
+    creeazaPat5((pat5) => {
+        pat5.position.set(0, -2.2, frontZ - 1.5);
+        grupCamera.add(pat5);
+    });
+
+    creeazaCeas1((ceas1) => {
+        ceas1.position.set(-0.2, 0.7, frontZ - 1.65);
+        grupCamera.add(ceas1);
+    });
+
+    creeazaCovor1((covor2) => {
+        covor2.position.set(0, -1.3, frontZ - 1);
+        grupCamera.add(covor2);
+    });
+    return grupCamera;
+}
+
 
 // (include podea, pereti exteriori, pereti interiori)
 function creeazaEtaj(numarEtaj, esteParter = false) {
@@ -1812,59 +2750,57 @@ function creeazaEtaj(numarEtaj, esteParter = false) {
     podea.position.y = -inaltimeEtaj / 2;
     grupEtaj.add(podea);
 
-    const fatadaStanga = new THREE.Mesh(geoPereteRosu, matRosuCaramiziu);
-    fatadaStanga.position.set(-5, 0, 2.5);
-    grupEtaj.add(fatadaStanga);
+    const pozitiiFerestreX = [-5.8, -4.2, -1.8, 1.8, 4.2, 5.8];
+    const zFatada = 2.5;
+    const grosimeFatada = 0.2;
+    const minX = -7;
+    const maxX = 7;
+    const minY = -1.5;
+    const maxY = 1.5;
+    const golY = 0;
+    const golInaltime = 1.84;
+    const golLatimeSingle = 1.08;
 
-    const fatadaMijloc = new THREE.Mesh(geoPereteOranj, matOranjDeschis);
-    fatadaMijloc.position.set(0, 0, 2.5); // centrat
-    grupEtaj.add(fatadaMijloc);
+    const goluri = [];
+    pozitiiFerestreX.forEach((x) => {
+        if (esteParter && (x === -1.8 || x === 1.8)) {
+            return;
+        }
+        goluri.push({
+            x1: x - golLatimeSingle / 2,
+            x2: x + golLatimeSingle / 2,
+            y1: golY - golInaltime / 2,
+            y2: golY + golInaltime / 2
+        });
+    });
 
-    // doar camera de la ultimul etaj e cu close view
-    const esteEtajCuGeamInteractiv = numarEtaj === numarEtaje - 1;
-    if (esteEtajCuGeamInteractiv) {
-        const zFatada = 2.5;
-        const grosimeFatada = 0.2;
-        const minX = 3;
-        const maxX = 7;
-        const minY = -1.5;
-        const maxY = 1.5;
-        const golY = 0;
-        const golInaltime = 1.84;
-        const golLatimeSingle = 1.08;
-        const centruGol1 = 4.2;
-        const centruGol2 = 5.8;
+    const getMaterialForX = (x) => {
+        if (x < -3 || x > 3) {
+            return matRosuCaramiziu;
+        }
+        return matOranjDeschis;
+    };
 
-        const gol1Stanga = centruGol1 - golLatimeSingle / 2;
-        const gol1Dreapta = centruGol1 + golLatimeSingle / 2;
-        const gol2Stanga = centruGol2 - golLatimeSingle / 2;
-        const gol2Dreapta = centruGol2 + golLatimeSingle / 2;
-        const golJos = golY - golInaltime / 2;
-        const golSus = golY + golInaltime / 2;
+    const adaugaPanel = (x1, x2, y1, y2) => {
+        if (x2 <= x1 || y2 <= y1) return;
 
-        const adaugaPanel = (x1, x2, y1, y2) => {
-            if (x2 <= x1 || y2 <= y1) return;
+        const material = getMaterialForX((x1 + x2) / 2);
+        const panel = new THREE.Mesh(
+            new THREE.BoxGeometry(x2 - x1, y2 - y1, grosimeFatada),
+            material
+        );
+        panel.position.set((x1 + x2) / 2, (y1 + y2) / 2, zFatada);
+        grupEtaj.add(panel);
+    };
 
-            const panel = new THREE.Mesh(
-                new THREE.BoxGeometry(x2 - x1, y2 - y1, grosimeFatada),
-                matRosuCaramiziu
-            );
-            panel.position.set((x1 + x2) / 2, (y1 + y2) / 2, zFatada);
-            grupEtaj.add(panel);
-        };
-
-        // 2 decupaje separate pentru cele 2 geamuri + stalp intre ele.
-        adaugaPanel(minX, gol1Stanga, minY, maxY);
-        adaugaPanel(gol1Dreapta, gol2Stanga, minY, maxY);
-        adaugaPanel(gol2Dreapta, maxX, minY, maxY);
-
-        adaugaPanel(gol1Stanga, gol2Dreapta, golSus, maxY);
-        adaugaPanel(gol1Stanga, gol2Dreapta, minY, golJos);
-    } else {
-        const fatadaDreapta = new THREE.Mesh(geoPereteRosu, matRosuCaramiziu);
-        fatadaDreapta.position.set(5, 0, 2.5);
-        grupEtaj.add(fatadaDreapta);
-    }
+    let lastX = minX;
+    goluri.forEach((gol) => {
+        adaugaPanel(lastX, gol.x1, minY, maxY);
+        adaugaPanel(gol.x1, gol.x2, gol.y2, maxY);
+        adaugaPanel(gol.x1, gol.x2, minY, gol.y1);
+        lastX = gol.x2;
+    });
+    adaugaPanel(lastX, maxX, minY, maxY);
 
     // pereti laterali
     const pereteLateralStanga = new THREE.Mesh(new THREE.BoxGeometry(0.2, 3, 5), matRosuCaramiziu);
@@ -1890,8 +2826,6 @@ function creeazaEtaj(numarEtaj, esteParter = false) {
     grupEtaj.add(pereteInt2);
 
 
-    const pozitiiFerestreX = [-5.8, -4.2, -1.8, 1.8, 4.2, 5.8]; // coordonate X pt cele 6 ferestre pe latime
-
     pozitiiFerestreX.forEach((x, index) => {
         // usa de la parter
         if (esteParter && (x === -1.8 || x === 1.8)) {
@@ -1901,45 +2835,74 @@ function creeazaEtaj(numarEtaj, esteParter = false) {
         const win = creeazaFereastra();
         win.position.set(x, 0, 2.6); // pozitionata pe fatada
         grupEtaj.add(win);
-        const esteCameraInteractiva = 
-            !(esteParter && (index === 2 || index === 3)); 
+        const esteCameraInteractiva =
+            !(esteParter && (index === 2 || index === 3));
 
         if (esteCameraInteractiva) {
+            const geamSticlaMesh = win.userData.sticla;
+            const geamRamaMesh = win.userData.rama;
+            const geamPervazMesh = win.userData.pervaz;
 
-            const geamSticlaMesh = win.userData.sticla; 
-            const geamRamaMesh = win.userData.rama; 
-            const geamPervazMesh = win.userData.pervaz; 
+            const matRamaInteractiva = matAlbRama.clone();
+            matRamaInteractiva.transparent = true;
+            matRamaInteractiva.opacity = 0.95;
 
-            const matRamaInteractiva = matAlbRama.clone(); 
-            matRamaInteractiva.transparent = true; 
-            matRamaInteractiva.opacity = 0.95; 
+            geamRamaMesh.material = matRamaInteractiva;
+            geamPervazMesh.material = matRamaInteractiva;
 
-            geamRamaMesh.material = matRamaInteractiva; 
-            geamPervazMesh.material = matRamaInteractiva; 
+            geamSticlaMesh.material = new THREE.MeshStandardMaterial({
+                color: 0x05070d,
+                transparent: true,
+                opacity: 0.9,
+                depthWrite: false,
+                roughness: 0.92,
+                metalness: 0.02,
+                emissive: 0x000000,
+                emissiveIntensity: 0
+            });
+
+            let cameraInterior;
+            const etajPar = numarEtaj % 2 === 0; // true pentru etaje pare (0, 2, 4...)
             
-            geamSticlaMesh.material = new THREE.MeshStandardMaterial({ 
-                
-                color: 0x05070d, 
-                transparent: true, 
-                opacity: 0.9, 
-                depthWrite: false, 
-                roughness: 0.92, 
-                metalness: 0.02, 
-                emissive: 0x000000, 
-                emissiveIntensity: 0 
-            }); 
-            
-            geamuriInteractiveMeshes.push(geamSticlaMesh); 
-            geamuriInteractiveRame.push(geamRamaMesh); 
-            geamuriInteractivePervaze.push(geamPervazMesh); 
-            
-            apartamente.push({ 
-                etaj: numarEtaj, 
-                coloana: index, 
-                geamMesh: geamSticlaMesh, 
-                ramaMesh: geamRamaMesh, 
-                pervazMesh: geamPervazMesh 
-            }); 
+            switch (index) {
+                case 0:
+                    cameraInterior = etajPar ? creeazaCamera1() : creeazaCamera7();
+                    break;
+                case 1:
+                    cameraInterior = etajPar ? creeazaCamera2() : creeazaCamera8();
+                    break;
+                case 2:
+                    cameraInterior = etajPar ? creeazaCamera3() : creeazaCamera9();
+                    break;
+                case 3:
+                    cameraInterior = etajPar ? creeazaCamera4() : creeazaCamera10();
+                    break;
+                case 4:
+                    cameraInterior = etajPar ? creeazaCamera5() : creeazaCamera11();
+                    break;
+                case 5:
+                    cameraInterior = etajPar ? creeazaCamera6() : creeazaCamera12();
+                    break;
+                default:
+                    cameraInterior = etajPar ? creeazaCamera1() : creeazaCamera7();
+            }
+
+            cameraInterior.position.set(x, 0, 0);
+            cameraInterior.visible = false;
+            grupEtaj.add(cameraInterior);
+
+            geamuriInteractiveMeshes.push(geamSticlaMesh);
+            geamuriInteractiveRame.push(geamRamaMesh);
+            geamuriInteractivePervaze.push(geamPervazMesh);
+
+            apartamente.push({
+                etaj: numarEtaj,
+                coloana: index,
+                geamMesh: geamSticlaMesh,
+                ramaMesh: geamRamaMesh,
+                pervazMesh: geamPervazMesh,
+                roomGroup: cameraInterior
+            });
         }
     });
 
@@ -1950,9 +2913,6 @@ function creeazaEtaj(numarEtaj, esteParter = false) {
     }
 
     if (numarEtaj === numarEtaje - 1) {
-        const cameraVizibila = creeazaCameraVizibilaGeamDreaptaSus();
-        grupEtaj.add(cameraVizibila);
-
         becTavanMesh = new THREE.Mesh(
             new THREE.SphereGeometry(0.12, 16, 16),
             new THREE.MeshStandardMaterial({
@@ -2578,6 +3538,12 @@ function focusPeApartament(ap) {
     
     ap.geamMesh.visible = false; 
     
+    apartamente.forEach((item) => {
+        if (item.roomGroup) {
+            item.roomGroup.visible = item === ap;
+        }
+    });
+    
     geamuriInteractiveRame.forEach((rama, index) => { 
         
         const pervaz = geamuriInteractivePervaze[index]; 
@@ -2616,6 +3582,12 @@ function iesireDinFocus() {
         mesh.visible = true; 
         mesh.material.opacity = 0.9; 
     }); 
+    
+    apartamente.forEach((item) => {
+        if (item.roomGroup) {
+            item.roomGroup.visible = false;
+        }
+    });
     
     geamuriInteractiveRame.forEach((rama, index) => { 
         const pervaz = geamuriInteractivePervaze[index]; 
