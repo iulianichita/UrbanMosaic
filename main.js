@@ -3602,6 +3602,9 @@ function iesireDinFocus() {
 }
 
 function onPointerDown(event) {
+
+    if (event.button !== 0) return; //am lasat doar click stanga (button 0) pentru camere (pt a evita confuzia cu click dreapta pt web xr)
+
     if (geamuriInteractiveMeshes.length === 0) {
         return;
     }
