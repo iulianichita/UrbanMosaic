@@ -27,7 +27,7 @@ Proiectul *Urban Mosaic* reprezintă o explorare interactivă a vieților surpri
   - Simulare a vântului ce are efect asupra copacilor, aceștia au o mișcare neregulată creată prin formule trigonometrice (`Math.sin` și `Math.cos`) aplicate pe 3 niveluri independente, fiecare având viteze, amplitudini și faze desincronizare (`windData.phase`)
 - Interactivitate
 - Schimbare perspectivă
-- Starea ambienței sonore
+- Starea ambianței sonore
 
 ---
 
