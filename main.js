@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { setupWebXR } from './webxr.js';
+
 const loader = new GLTFLoader();
 
 const scene = new THREE.Scene();
@@ -3600,6 +3602,9 @@ function iesireDinFocus() {
 }
 
 function onPointerDown(event) {
+
+    if (event.button !== 0) return; //am lasat doar click stanga (button 0) pentru camere (pt a evita confuzia cu click dreapta pt web xr)
+
     if (geamuriInteractiveMeshes.length === 0) {
         return;
     }
@@ -3685,8 +3690,8 @@ function onWindowResize() {
 }
 
 function animate() {
-    requestAnimationFrame(animate);
-
+    
+    // requestAnimationFrame(animate); // inlocuit de setAnimationLoop din webxr.js
     const timpCurent = performance.now();
     const deltaTimp = (timpCurent - timpRandareAnterior) / 1000;
     timpRandareAnterior = timpCurent;
@@ -3731,12 +3736,25 @@ function animate() {
         });
     });
 
-    camera.position.lerp(cameraTargetPosition, 0.07);
-    cameraLookAtCurent.lerp(cameraTargetLookAt, 0.08);
-    camera.fov += (cameraTargetFov - camera.fov) * 0.08;
-    camera.updateProjectionMatrix();
-    camera.lookAt(cameraLookAtCurent);
+    // renderer.xr.isPresenting e true cand sesiunea WebXR e activa (cu headset VR) 
+    // in varianta noastra Web XR este implementat prin mouse-look (alternativa desktop fara headset), deci renderer.xr.isPresenting va fi mereu false
+    // renderer.userData.mouseLookActive e true in modul click-dreapta
+    const xrSauMouseLook = renderer.xr.isPresenting || renderer.userData.mouseLookActive;
+    if (!xrSauMouseLook) 
+    {
+        camera.position.lerp(cameraTargetPosition, 0.07);
+        cameraLookAtCurent.lerp(cameraTargetLookAt, 0.08);
+        camera.fov += (cameraTargetFov - camera.fov) * 0.08;
+        camera.updateProjectionMatrix();
+        camera.lookAt(cameraLookAtCurent);
+    } 
+    else if (!renderer.xr.isPresenting)
+    {
+        camera.fov += (cameraTargetFov - camera.fov) * 0.08; //pt zoom
+        camera.updateProjectionMatrix();
+    }
 
     renderer.render(scene, camera);
 }
-animate();
+// animate(); //loop-ul de animatie e pornit acum din setupWebXR
+setupWebXR(renderer, camera, scene, animate);
