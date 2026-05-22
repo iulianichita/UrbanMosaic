@@ -36,6 +36,10 @@ Proiectul *Urban Mosaic* reprezintă o explorare interactivă a vieților surpri
 
 ---
 
+### Demo
+
+https://drive.google.com/file/d/1MXJnDmj3r14nAeoMA21zuFYS23VuISKa/view?usp=sharing
+
 ### Pași de instalare/pornire a aplicației
 
 Este necesară instalarea PureData.
