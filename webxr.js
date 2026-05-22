@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
 
 const CAMERA_X = 5;
 const CAMERA_FLOOR_Y = 7.64;
@@ -85,16 +84,12 @@ export function setupWebXR(renderer, camera, scene, animateLoop)
     hint.innerHTML = 'Click stânga:<br>intră / ieși din cameră<br><br>Click dreapta + drag:<br>rotește<br><br><span style="opacity:0.65;font-size:11px">Click dreapta + scroll:<br>apropie / depărtează</span>';
     document.body.appendChild(hint);
 
-    const vrButton = VRButton.createButton(renderer);
-    vrButton.style.left = '20px';
-    vrButton.style.transform = 'none';
-    document.body.appendChild(vrButton);
-
     setupMouseLook(renderer, camera);
 
     let pozitieOriginalaSalvata = null;
     let rotatieOriginalaGSalvata = null;
 
+    //pentru cazul in care sesiunea WebXR e activa (cu headset VR)
     renderer.xr.addEventListener('sessionstart', () => 
     {
         pozitieOriginalaSalvata = camera.position.clone();
