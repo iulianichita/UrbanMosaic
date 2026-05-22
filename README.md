@@ -8,6 +8,7 @@ Proiectul *Urban Mosaic* reprezintă o explorare interactivă a vieților surpri
 - CSS3: folosit pentru eliminarea marginilor implicite ale browser-ului (`margin: 0`), ascunderea scrollbar-ului (`overflow: hidden`) și asigurarea acoperirii integrale a ecranului a elementului Canvas (`100vw/vh`)
 - JavaScript: utilizat pentru gestionarea logicii matematice și crearea animaților
 - Node.js: rularea serverului local
+- Pure Data Visual Programming: utilizat pentru generarea procedurală a sunetului ambiental
 
 ### API-uri și librării
 
@@ -28,6 +29,10 @@ Proiectul *Urban Mosaic* reprezintă o explorare interactivă a vieților surpri
 - Interactivitate
 - Schimbare perspectivă
 - Starea ambianței sonore
+  - Generare procedurală a sunetului ambiental în Pure Data; sunetele sunt create în timp real prin oscilatoare, filtre, noise și efecte de delay
+  - Ambient exterior realizat în `fundal.pd`, folosit pentru atmosfera nocturnă generală a scenei; muzică ambientală de interior realizată în `camera2.pd`, activată atunci când utilizatorul intră într-un apartament
+  - Tranziție dinamică între ambientul exterior și sunetul camerei: la intrarea în apartament se oprește fundalul și pornește patch-ul camerei, iar la ieșire se revine la ambianța nocturnă
+  - Comunicare în timp real între aplicația Three.js și serverul audio local prin WebSocket, folosind comenzile `START_BACKGROUND`, `ENTER_ROOM` și `EXIT_ROOM`
 
 ---
 
