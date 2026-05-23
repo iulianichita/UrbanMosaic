@@ -16,7 +16,7 @@ Proiectul *Urban Mosaic* reprezintă o explorare interactivă a vieților surpri
 - GLTFLoader (Three.js Extension): API dedicat încărcării și parsării asincrone a modelelor 3D (fișiere `.glb`)
 - PureData: mediu de programare vizuală pentru generarea sunetelor, adaptate interacțiunii utilizatorului
 - WebSockets API (Modulul `ws`): protocol de comunicare bidirecțională utilizat pentru transmiterea instantanee a comenzilor din browser (`START_BACKGROUND`, `ENTER_ROOM`, `EXIT_ROOM`) către serverul audio local
-- WebXR (Modulul `webxr.js`): interfață integrată pentru a asigura extensibilitatea aplicației 
+- WebXR (Modulul `webxr.js`): activează suportul WebXR pentru randare în VR și adaugă un sistem de control al camerei de tip mouse look pentru desktop
 
 ### Features
 - Atmosferă nocturnă
@@ -35,7 +35,10 @@ Proiectul *Urban Mosaic* reprezintă o explorare interactivă a vieților surpri
   - Ambient exterior realizat în `fundal.pd`, folosit pentru atmosfera nocturnă generală a scenei; muzică ambientală de interior realizată în `camera2.pd`, activată atunci când utilizatorul intră într-un apartament
   - Tranziție dinamică între ambientul exterior și sunetul camerei: la intrarea în apartament se oprește fundalul și pornește patch-ul camerei, iar la ieșire se revine la ambianța nocturnă
   - Comunicare în timp real între aplicația Three.js și serverul audio local prin WebSocket, folosind comenzile `START_BACKGROUND`, `ENTER_ROOM` și `EXIT_ROOM`
-
+- Navigare și controlul camerei
+  - Prin menținerea click-ului dreapta apăsat și deplasarea mouse-ului, se poate roti camera pe axele de privire
+  - Scroll-ul permite deplasarea camerei înainte sau înapoi, pentru a expora scena 3D
+  - Funcționalitatea poate fi extinsă ulterior cu suport WebXR pentru utilizarea unui headset VR și a altor mecanisme de navigare imersivă, având deja pregătită structura necesară, prin activarea `renderer.xr.enabled` și definirea evenimentelor `sessionstart` și `sessionend`
 ---
 
 ### Demo
