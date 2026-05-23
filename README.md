@@ -35,8 +35,8 @@ Proiectul *Urban Mosaic* reprezintă o explorare interactivă a vieților surpri
   - Ambient exterior realizat în `fundal.pd`, folosit pentru atmosfera nocturnă generală a scenei; muzică ambientală de interior realizată în `camera2.pd`, activată atunci când utilizatorul intră într-un apartament
   - Tranziție dinamică între ambientul exterior și sunetul camerei: la intrarea în apartament se oprește fundalul și pornește patch-ul camerei, iar la ieșire se revine la ambianța nocturnă
   - Comunicare în timp real între aplicația Three.js și serverul audio local prin WebSocket, folosind comenzile `START_BACKGROUND`, `ENTER_ROOM` și `EXIT_ROOM`
-- Navigare și controlul camerei
-  - Prin menținerea click-ului dreapta apăsat și deplasarea mouse-ului, se poate roti camera pe axele de privire
+- Explorarea scenei și controlul camerei
+  - Prin menținerea click-ului dreapta apăsat și deplasarea mouse-ului, se poate roti camera pe axele X si Y
   - Scroll-ul permite deplasarea camerei înainte sau înapoi, pentru a expora scena 3D
   - Funcționalitatea poate fi extinsă ulterior cu suport WebXR pentru utilizarea unui headset VR și a altor mecanisme de navigare imersivă, având deja pregătită structura necesară, prin activarea `renderer.xr.enabled` și definirea evenimentelor `sessionstart` și `sessionend`
 ---
